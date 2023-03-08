@@ -1,0 +1,105 @@
+
+<div class="mb-0 mt-4" style="text-align: center">
+<h2 style="display: inline; text-decoration: dashed;">Your Databases</h2>
+
+<!-- <button type="button addDbBut" style="  display: inline; 
+margin-bottom: 10px; background-color: rgb(46, 46, 46);" href="dashboard/addDB" class="btn btn-dark"><a href="dashboard/addDB"  class="text-decoration-none" ><img title="add database" src="images/add-database.png" alt="Add another database."
+  height="20px" width="20px"> Add a database</a></button> -->
+
+</div>
+<!-- <div class="col-1">
+  <button type="button px-0"class="btn btn-dark"><a href="dashboard/addDB"  class="chlid"><img title="add database" src="images/add-database.png" alt="Add another database."
+    height="30" width="30"></a></button>
+  </div>
+</div> -->
+<div class="table-responsive">
+  <table class="table table-hover table-striped table-sm ">
+    <!-- <caption></caption> -->
+    <thead class="" >
+      <tr>
+        <th scope="col">Database Name</th>
+        <!-- <th scope="col">Database User</th> -->
+        <th scope="col">Version</th>
+        <th scope="col">Database Status</th>
+        <th scope="col">Modify</th>
+      </tr>
+    </thead>
+    <% if(dbSizeInfo.length!==0) { %>
+    <tbody>
+     
+      <% dbList.forEach(element => {  %>       
+      <tr>
+        <td><%=element.db_nickname%></td>
+        <td><%=element.db_version%></td>
+        <% if(element.db_status==="online"){ %> 
+        <td style="color:rgb(67, 185, 92)"><i class="fas fa fa-circle" style="font-size: 12px;"></i> <%=element.db_status%></td>
+        <% }else{ %> 
+          <td style="color:rgb(255, 40, 40)"><i class="fas fa fa-circle"style="font-size: 12px;"></i> <%=element.db_status%></td>
+        <% } %> 
+          <td><a href="/db/<%=element.id%>/view"   role="button"><i title="view" class="fal fa fa-eye colorChangeWhite"></i></a>  
+            <% if(user.role == 'admin') {%> 
+              <a class="px-1" href="./dashboard/<%=element.id%>/edit" ><i title="edit" class="fal fa fa-edit colorChangeBlue"></i></a>  
+              <a class="px-1 delete" id="delete<%=element.id%>" data-doc<%=element.id%>="<%=element.id%>"><i title="delete" class="fal fa fa-trash-alt colorChangeRed"></i></a></td> 
+            <% } %> 
+      </tr>
+
+      <script>
+        const trashcan<%=element.id%> = document.getElementById('delete<%=element.id%>');
+        trashcan<%=element.id%>.addEventListener("click", function () {
+                  Swal.fire({
+                      title: 'Are sure you want delete this database?',
+                      text: "If you delete it, all the saved information will be gone.",
+                      icon: 'question',
+                      iconColor:"#d33",
+                      showCancelButton: true,
+                      confirmButtonColor: '#d33',
+                      cancelButtonColor: 'rgb(60, 60, 60)',
+                      confirmButtonText: 'Yes',
+                      allowOutsideClick: false,
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          const endpoint = `/dashboard/${trashcan<%=element.id%>.dataset.doc<%=element.id%>}/delete`;
+                          fetch(endpoint, {
+                            method: 'DELETE',
+                          })
+                        .then((response) => {return response.json()},Swal.fire({
+                            allowOutsideClick: false,
+                            icon: 'success',
+                            text: 'Deleted database',
+                            showConfirmButton: false,
+                            timer:3000
+                        }))
+                        .then(data => window.location.href = data.redirect)
+                        
+                    }
+                  }).catch(err => console.error(err));
+              })
+      </script>    
+      <% }); %> 
+      <% } %>
+      <tr>
+        <td colspan="4" > <button type="button" title="add a database"   href="dashboard/addDB" class="btn btn-dark tbBut" >+ <i class="fal fa fa-database"></i> <a href="dashboard/addDB"  class="text-decoration-none" ></a></button></td>
+      </tr>
+    </tbody>
+   
+  </table>
+</div>
+</main>
+</div>
+</div>
+<script>
+  for (let i = 0; i < 2; i++) {
+    document.querySelectorAll('.tbBut,.tbBut2')[i].addEventListener('click',(e)=>{
+    window.location.href='dashboard/addDB'
+  })    
+  }
+</script>
+
+
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="/javascripts/sidebars.js"></script>
+
+</body>
+</html>

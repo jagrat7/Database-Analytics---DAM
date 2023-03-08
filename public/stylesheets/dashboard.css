@@ -1,0 +1,181 @@
+/* body {
+  font-size: .875rem;
+} */
+i{
+  font-size: 16px;
+}
+
+.dropdown-menu {
+  margin-left: -3rem;
+}
+.dropdown-menu .fa-user {
+  font-size: 12px;
+}
+.dropdown-menu .fa-sign-out-alt {
+  font-size: 12px;
+}
+.nav-item a:hover{
+  text-shadow: rgba(255, 255, 255, 0.521) 0px 0 5px;
+
+}
+.show, .collapsing{
+  padding-left: 1rem;
+}
+.dropdown-menu.show , .dropdown-menu.collapsing{
+  padding-left: 0rem;
+}
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+  right: 0;
+  */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100;
+  /* Behind the navbar */
+  padding: 48px 0 0;
+  /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
+
+.sidebar .nav-link.active {
+  color: #2470dc;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .65rem;
+  padding-bottom: .65rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.colorChangeBlue {
+  color: rgb(77, 77, 77);
+  font-size: 20px;
+}
+
+.colorChangeRed {
+  color: rgb(77, 77, 77);
+  font-size: 20px;
+}
+
+.colorChangeBlue:hover {
+  color: #cfc538;
+}
+
+.colorChangeRed:hover {
+  color: rgb(255, 60, 60);
+}
+.colorChangeWhite {
+  color: rgb(77, 77, 77);
+  font-size: 20px;
+}
+.colorChangeWhite:hover {
+  color: #57a2d4;
+}
+.addDbBut{
+  display: inline; 
+  margin-bottom: 10px; 
+  background-color: rgb(46, 46, 46);
+}
+
+.text-decoration-none{
+  color: rgb(251, 253, 255);
+
+}
+.text-decoration-none:hover{
+  color: rgb(168, 183, 199);
+
+}
+.tbBut{
+  background-color: rgb(40, 40, 40);
+  width: 100%;
+}
+.tbBut:hover{
+  background-color: rgb(30, 30, 30);
+}
+.tbBut2{
+  background-color: rgb(40, 40, 40);
+}
+.tbBut2:hover{
+  background-color: rgb(30, 30, 30);
+}
+.dropdown-menu{
+font-size: 13.5px;
+min-width: min-content;
+}

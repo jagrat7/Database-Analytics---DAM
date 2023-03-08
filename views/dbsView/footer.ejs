@@ -1,0 +1,100 @@
+<h2>Previous Logs</h2>
+<div class="table-responsive">
+  <% if ( tableData[0]!== undefined){ %> 
+
+    <% if(tableData[0].db_free_history!= undefined){ %> 
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Record id</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Free</th>
+          <th scope="col">Used</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tableData.forEach((element,index) => { %> 
+        <tr>
+          <td><%=element.id%> </td>
+          <td><%=element.created_at%> </td>
+          <td><%=element.db_free_history%> </td>
+          <td><%=element.db_used_history%> </td>
+          <td><%=element.db_total_history%> </td>
+        </tr>
+        <% }); %> 
+      </tbody>
+    </table>
+    <%} else if(tableData[0].db_archive_history_percent_used!= undefined){ %> 
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Record id</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Percent Used</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tableData.forEach((element) => { %> 
+        <tr>
+          <td><%=element.id%> </td>
+          <td><%=element.created_at%> </td>
+          <td><%=element.db_archive_history_percent_used%> </td>
+        </tr>
+        <% }); %> 
+      </tbody>
+    </table>
+    <% } else if(tableData[0].db_table_used_history!== undefined){ %> 
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Table Name</th>
+            <th scope="col">Record id</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Size</th>
+            <th scope="col">Used</th>
+             <th scope="col">PCT</th>
+          </tr>
+        </thead>
+        <tbody> 
+          <% tableData.forEach(element => { %> 
+          <tr>
+            <% if(tableName!== 'allData') {%> 
+                <% if(element.db_table_name_history===tableName){ %> 
+                  <td><%=element.db_table_name_history%> </td>
+                  <td><%=element.id%> </td>
+                  <td><%=element.created_at%> </td>
+                  <td><%=element.db_table_size_history%> </td>
+                  <td><%=element.db_table_used_history%> </td>
+                  <td><%=element.db_table_pct_history%> </td>
+                <% } %> 
+            <% }else{ %> 
+              <td><%=element.db_table_name_history%> </td>
+              <td><%=element.id%> </td>
+              <td><%=element.created_at%> </td>
+              <td><%=element.db_table_size_history%> </td>
+              <td><%=element.db_table_used_history%> </td>
+              <td><%=element.db_table_pct_history%> </td>
+              <% } %> 
+          </tr>
+        </tr>
+          <% }); %> 
+        </tbody>
+      </table>
+      <% } %> 
+ 
+  <% }%>
+
+</div>
+</main>
+</div>
+</div>
+
+
+
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+</html>

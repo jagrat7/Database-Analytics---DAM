@@ -1,0 +1,105 @@
+<%- include("header-dashboard"); -%>
+<div class="container-fluid px-5 py-5 m-auto" style="height: 80%; width: 80%;">
+
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-sm-12">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2>Enter your oracle database information</h2>
+          <form action="./addDB" id="addDbform" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">DB name (Nickname)</label>
+              <input type="text" class="form-control" name="dbName">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">DB SID/Service Name</label>
+              <input type="text" class="form-control" name="dbSid">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">DB Host/IP address</label>
+              <input type="text" class="form-control ps" name="dbIP"
+                pattern="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.){3}(25[0-5]|(2[0-4]|1\d|[1-9]|)\d)$">
+              <div id="emailHelp" class="form-text">You have to be on the same network for a valid IP e.g. 123.121.12.1
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">DB Port</label>
+              <input type="text" class="form-control ps" name="dbPort" pattern="^[0-9]{1,6}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">DB username</label>
+              <input type="text" class="form-control" name="dbUser">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">DB Password</label>
+              <input type="password" class="form-control " name="dbPassword">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" name="sysCheck">
+              <label class="form-check-label" for="sysCheck">Check if database use asm.</label>
+            </div>
+            <button type="submit" id="Submit" class="btn btn-dark">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  myForm = document.getElementById("addDbform")
+
+  myForm.addEventListener("submit", function (e) {
+    e.preventDefault()
+    Swal.fire({
+      title: 'Are you want add this database?',
+      text: "Make sure the db information is correct.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#65d672',
+      // cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'Trying to connect to database...',
+          showConfirmButton: false,
+        });
+        const prePayload = new FormData(this); //this = form data myForm
+      const payload = new URLSearchParams(prePayload);
+      fetch('/dashboard/addDB', {
+        method: 'POST',
+        body: payload,
+      })
+        .then(res => res.json())
+        .then((data) => {
+          if (data.connection) {
+            Swal.fire({
+              allowOutsideClick: false,
+              icon: 'success',
+              text: 'Connection successful. Database fetched!',
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              window.location.href = "/dashboard";
+            })
+            }else{
+            Swal.fire({
+              allowOutsideClick: true,
+              icon: 'error',
+              text: 'Connection to database failed. Please ensure you are on the right network and your information is correct.',
+              showConfirmButton: false,
+              showCloseButton: true
+            });
+          }
+        }).catch(error => console.error(error));
+
+      }
+    }).catch(error => console.error(error));
+  })
+</script>
+<script src="/javascripts/addDb-BootstrapValidation.js"></script>
+
+<%- include("footer3"); -%>

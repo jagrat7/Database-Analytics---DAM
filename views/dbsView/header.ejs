@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DAM App</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+  <link href="/stylesheets/dashboard.css" rel="stylesheet">
+  <!-- <link href="/stylesheets/sidebars.css" rel="stylesheet"> -->
+
+  <style>
+    body {
+      font-size: .875rem;
+    }
+  </style>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark  p-0 shadow">
+    <div class="container-fluid ps-0 px-3">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 " style="background-color:#212529; box-shadow:none; "
+        href="/">DAM</a>
+      <button class="navbar-toggler mt-1 mb-1 me-3" type="button" data-bs-toggle="collapse" data-bs-target=".navbars">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end navbars">
+        <ul class="navbar-nav ">
+          <li class="nav-item  ">
+            <a class="nav-link active " title="add a database" href="/dashboard/addDB">+ <i
+                class="fal fa fa-database"></i></a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link active" title="home" href="/dashboard"><i class="far fa fa-home"></i> </a>
+          </li>
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fad fa fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <!-- <li><a class="dropdown-item " href="/dashboard"><i class="far fa fa-home"></i> Home</a></li> -->
+              <li><a class="dropdown-item " id="dropdownProfile" href="/dashboard/profile"><i class="fal fa fa-user"></i> Profile</a></li>
+              <li><a class="dropdown-item " id="dropdownAdmin" href="/dashboard/adminPanel"><i style="font-size:11px" class="fas fa fa-user-cog"></i> Admin</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item " href="/logout"><i class="fal fa fa-sign-out-alt"></i> Sign Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-sm-2 col-lg-2 d-md-block bg-light sidebar collapse navbars">
+        <div class="position-sticky py-3 ">
+          <ul class="nav flex-column list-unstyled ps-0">
+            <!-- <li class="px-2 "><a class="text-decoration-none "
+                style="color: rgb(44, 44, 44); font-size: 16px; font-weight: bold;" href="/dashboard"><img
+                  class="mx-2 mb-2" src="/images/back.png" height="20px" width="20px" alt="back home">Return to
+                dashboard</a></li>
+            <hr> -->
+            <li class=" moveit mx-3">
+              <button class="btn dropdown-toggle  fw-bold collapsed " data-bs-toggle="collapse"
+                data-bs-target="#home-collapse" aria-expanded="false">
+                Database/<%=dbName%>
+              </button>
+              <div class="collapse show " id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-lighter pb-1  ">
+                  <li><a id="dbSizeId" href="./db-size" class="nav-link">DB Size</a></li>
+                  <li><a id="repId" href="./db-replication" class="nav-link">DB replication</a></li>
+                  <li><a id="archiveLogId" href="./db-archiveLog" class="nav-link">DB archive log utilization</a></li>
+                  <li style="display: inline;"><a id="tableSpaceId" href=" ./db-tablespace" class="nav-link">DB Table space utilization</a></li>
+                  <% if ( tableData[0]!== undefined){ %> 
+                    <% if ( tableData[0].db_table_name_history!== undefined){ %> 
+                      <button class="btn dropdown-toggle  fw-bold collapsed " data-bs-toggle="collapse"
+                      data-bs-target="#tb-collapse" aria-expanded="false" style="display: inline;">
+                      </button>
+                      <div class="collapse " id="tb-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-lighter pb-1  ">
+                        <%for (let i = 0; i < 5; i++) {%>
+                          <li><a id="individualTableName" href="./db-tablespace?tableName=<%= tableData[i].db_table_name_history %>" class="nav-link"><%= tableData[i].db_table_name_history %> </a></li>                    
+                        <% } %>                        
+                        </ul>
+                      </div>
+                    <% } %> 
+                  <% } %> 
+                  <li><a id="sysUltId" href="./db-sysSpaceUtilization" class="nav-link">Server File system space utilization (df
+                      -h)</a></li>
+                  <li><a id="dbLinksId" href=" ./db-links" class="nav-link">DB Links</a></li>
+
+                </ul>
+              </div>
+            </li>
+            <!-- <li class=" moveit mx-3">
+                <button class="btn btn-toggle rounded  dropdown-toggle fw-bold  nav-item " data-bs-toggle="collapse" data-bs-target="#home-collapse2" aria-expanded="false">
+                  Database 2
+                </button>
+                <div class="collapse show" id="home-collapse2">
+                  <ul class="btn-toggle-nav list-unstyled fw-lighter pb-1  ">
+                    <li  ><a href="#" class="nav-link">DB Size</a></li>
+                    <li ><a href="#" class="nav-link">DB replication</a></li>
+                    <li ><a href="#" class="nav-link">DB archive log utilization</a></li>
+                    <li ><a href="#" class="nav-link">DB Table space utilization</a></li>
+                    <li ><a href="#" class="nav-link">Server File system space utilization (df -h)</a></li> 
+                  </ul>
+                </div>
+              </li> -->
+          </ul>
+
+          <!-- Reports -->
+<!-- 
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Saved reports</span>
+            <a class="link-secondary" href="#" aria-label="Add a new report">
+              <span data-feather="plus-circle"></span>
+            </a>
+          </h6>
+          <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                Current month
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                Last quarter
+              </a>
+            </li>
+
+          </ul> -->
+        </div>
+      </nav>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2"><%=dbName%></h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <!-- <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div> -->
+            <div class="dropdown">
+              <button type="button" id="tfButton" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span  data-feather="calendar"></span>
+                Today
+              </button>
+              <% if(dbTableName == 'dbSize') {%> 
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="./db-size">Today</a></li>
+                  <li><a class="dropdown-item" href="./db-size?timeFrame=week">Week</a></li>
+                  <li><a class="dropdown-item" href="./db-size?timeFrame=month">Month</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Custom Timeframe</a></li>
+                </ul>
+                <script>
+                  const link=document.getElementById('dbSizeId')
+                  link.style.color = "#57a2d4";
+                </script>
+              <% } else if(dbTableName == 'archiveLog') {%> 
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="./db-archiveLog">Today</a></li>
+                  <li><a class="dropdown-item" href="./db-archiveLog?timeFrame=week">Week</a></li>
+                  <li><a class="dropdown-item" href="./db-archiveLog?timeFrame=month">Month</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Custom Timeframe</a></li>
+                </ul>
+                <script>
+                  const link=document.getElementById('archiveLogId')
+                  link.style.color = "#57a2d4";
+                </script>
+              <%}else if( dbTableName=='tableSpace' ){ %> 
+                  <ul class="dropdown-menu">
+                    <% if(tableName!== 'allData') {%> 
+                      <li><a class="dropdown-item" href="./db-tablespace?tableName=<%=tableName%>" >Today</a></li>
+                      <li><a class="dropdown-item" href="./db-tablespace?tableName=<%=tableName%>&timeFrame=week">Week</a></li>
+                      <li><a class="dropdown-item" href="./db-tablespace?tableName=<%=tableName%>&timeFrame=month">Month</a></li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li><a class="dropdown-item" href="#">Custom Timeframe</a></li>
+                    <% } else{%>
+                        <li><a class="dropdown-item" href="./db-tablespace">Today</a></li>
+                        <li><a class="dropdown-item" href="./db-tablespace?timeFrame=week">Week</a></li>
+                        <li><a class="dropdown-item" href="./db-tablespace?timeFrame=month">Month</a></li>
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Custom Timeframe</a></li>
+                      <% } %>
+                  </ul>
+                  <script>
+                    const link=document.getElementById('tableSpaceId')
+                    link.style.color = "#57a2d4";
+                  </script>
+                  <% } else if(dbTableName == 'dbLinks') {%> 
+                    <script>
+                      const link=document.getElementById('dbLinksId')
+                      link.style.color = "#57a2d4";
+                    </script>
+                  <% } else if(dbTableName == 'replication') {%> 
+                    <script>
+                      const link=document.getElementById('repId')
+                      link.style.color = "#57a2d4";
+                    </script>
+                  <% } else if(dbTableName == 'sysSpaceUtilization') {%> 
+                    <script>
+                      const link=document.getElementById('sysUltId')
+                      link.style.color = "#57a2d4";
+                    </script>
+                <% } else {%> 
+                          
+               <%}%> 
+  <script>
+    const params = new URLSearchParams(window.location.search)
+
+    const dbSizeLink=  document.getElementById('dbSizeId')
+    const archiveLogLink =  document.getElementById('archiveLogId')
+    const tableSpaceLink =  document.getElementById('tableSpaceId')
+    const individualTableNameLink = document.getElementById('individualTableName')
+    // const tableData =  <%=tableData %>;
+    for (const [key, value] of params) {
+      if(key=='timeFrame'&&value=='week'){
+       document.getElementById('tfButton').innerHTML ='Week'
+       dbSizeLink.href='./db-size?timeFrame=week'
+       archiveLogLink.href='./db-archiveLog?timeFrame=week'
+        // if ( tableData[0]!== undefined){ 
+        //   if ( tableData[0].db_table_name_history!== undefined){ 
+        //     for (let i = 0; i < 5; i++) {
+        //       individualTableNameLink.href="./db-tablespace?tableName="+tableData[i].db_table_name_history +"&timeFrame=week"       
+        //     } 
+        //   }
+        // }
+       tableSpaceLink.href='./db-tablespace?timeFrame=week'
+      }
+      else if(key=='timeFrame'&&value=='month'){
+        document.getElementById('tfButton').innerHTML = 'Month'
+        dbSizeLink.href='./db-size?timeFrame=month'
+        archiveLogLink.href='./db-archiveLog?timeFrame=month'
+        tableSpaceLink.href='./db-tablespace?timeFrame=month'
+
+      }
+      else{
+        dbSizeLink.href='./db-size'
+        archiveLogLink.href='./db-archiveLog'
+        tableSpaceLink.href='./db-tablespace'
+
+      }
+  }
+  </script>
+
+            </div>
+          </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

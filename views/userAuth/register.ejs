@@ -1,0 +1,61 @@
+<%- include('header-login') %>
+
+<div class="container mt-5">
+  <h1>Register</h1>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="alert alert-info" role="alert">
+            Please note that after you sucessfully register, you will have wait till your account is approved by your admin.
+          </div>
+          <!-- Makes POST request to /register route -->
+          <form id="form1" action="/register" method="POST" class="needs-validation" novalidate>
+            <div class="form-group">
+              <label for="email">Enter a email</label>
+              <input type="email" class="form-control my-2" id="email" name="email" required>
+              <!-- <div id="emailValid" class="valid-feedback">Valid</div> -->
+              <div id="emailInvalid" class="invalid-feedback">Enter a vaild email, example@email.com.</div>
+            </div>
+            <div class="form-group">
+              <label for="password">Enter a password</label>
+              <input type="password" class="form-control ps my-2 " placeholder="Password" name="password" id="password"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+              <div class="valid-feedback">Valid</div>
+              <div class="invalid-feedback">Must contain at least one number and upper letter, and at
+                least 8 or more characters.</div>
+              <!-- <div style="font-size: 12px;" class="form-text">Must contain at least one number and one letter, and at
+                least 8 or more characters.
+              </div> -->
+              <input type="password" class="form-control ps mt-2 pwds" placeholder="Confirm Password" id="confirm_password"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+              <div id="cPwdValid" class="valid-feedback">Passwords match.</div>
+              <div id="cPwdInvalid" class="invalid-feedback">Must contain at least one number and one letter, and at
+                least 8 or more characters.</div>
+            </div>
+            <button type="submit" class="btn btn-dark my-2" id="submitBtn">Register</button>
+            <!-- <div id="error" style="color: rgb(255, 95, 95);"></div> -->
+          </form>
+          <p class="pt-1 ps-0 mb-0 pb-0 my-0" style="font-size: 14px; ">Already registered a user? Click <a href="/login">here</a> to login.</p> 
+
+        </div>
+      </div>
+    </div>
+    <script src="javascripts/password-validation.js"></script>
+
+    <!-- <div class="col-sm-4">
+      <div class="card social-block">
+        <div class="card-body">
+          <a class="btn btn-block" href="/auth/google" role="button">
+            <i class="fab fa-google"></i>
+            Sign Up with Google
+          </a>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+
+</div>
+
+<%- include('header-login') %>

@@ -1,0 +1,20 @@
+<%- include("header-dashboard"); -%>
+<div class="container-fluid px-5 ">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-sm-12">
+            <div class="card m-5 p-2">
+                <div class="card-body">
+                  <h5 class="card-title" style="text-align: center;" ><i style="font-size: 18px;" class="fas fa fa-address-card"></i> User Profile</h5>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Name: <%= user.name %>  </li>
+                    <li class="list-group-item">Email: <%= user.email%> </li>
+                    <li class="list-group-item">Role: <%= user.role %> </li>
+                  </ul>
+            
+                </div>
+              </div>
+        </div>
+    </div>
+
+</div>
+<%- include("footer3"); -%>

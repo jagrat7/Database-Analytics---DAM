@@ -1,0 +1,70 @@
+<%- include("header-dashboard")-%>
+
+<div class="container-fulid px-5 py-3 ">
+  <button class="btn dropdown-toggle  fw-bold collapsed " type="button" id="tab" data-bs-toggle="collapse"
+  data-bs-target="#home-collapse" aria-expanded="false">
+   <i id="viewIcon" title="show dbs" style="font-size: 22px;" class="colorChangeWhite fas fa fa-eye"></i>
+  </button>
+  <div class="collapse show " id="home-collapse">
+    <div class="row  row-cols-sm-1 row-cols-md-2">
+
+      <% if(dbSizeInfo.length!==0) { %>
+        <% for (let i = 0; i < dbSizeInfo.length; i++) { %>       
+        <div class="col ">
+          <canvas class="my-4 w-100" id="myChart<%=dbSizeInfo[i].id%>" width="900" height="380"></canvas>
+          <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+            integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
+          </script>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+            integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
+          </script>
+
+          <script>
+            let eq<%=dbSizeInfo[i].id%>=((<%= dbSizeInfo[i].db_used%>/(<%=dbSizeInfo[i].db_used%>+<%=dbSizeInfo[i].db_free%>))*100)
+            let freeColor<%=dbSizeInfo[i].id%>
+            if(eq<%=dbSizeInfo[i].id%>>90){
+              freeColor<%=dbSizeInfo[i].id%>='#ff6969'
+            }
+            else if(eq<%=dbSizeInfo[i].id%>>80){
+              freeColor<%=dbSizeInfo[i].id%>='#ffcd69'
+            }
+            else{
+              freeColor<%=dbSizeInfo[i].id%>='#65d672'
+
+            }
+            const myChart<%=dbSizeInfo[i].id%> = new Chart("myChart<%=dbSizeInfo[i].id%>", {
+              type: 'pie',
+              data: {
+                labels: ["free(GB)", "used(GB)"],
+                datasets: [{
+                  label: "Database Size",
+                  backgroundColor: [freeColor<%=dbSizeInfo[i].id%>, "#292929"],
+                  data: [ <%=Math.round(dbSizeInfo[i].db_free)%> , <%=Math.round(dbSizeInfo[i].db_used)%> ]
+                }]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: '<%=dbList[i].db_nickname%>'
+                }
+              }
+            });
+          </script>
+          <script>
+            document.getElementById("myChart<%=dbSizeInfo[i].id%>").addEventListener("click", touchHandler, false);
+            function touchHandler(e) {
+              if (e.type == "click") {
+                window.location.href = "/db/<%=dbSizeInfo[i].db_id%>/view";
+              }
+            }
+            
+            </script>
+        </div>
+        <%}%> 
+      <%}%>
+
+      </div>
+  </div>
+  <script src="/javascripts/viewIconToggle.js"></script>
+
+<%- include("footer-dashboard"); -%>

@@ -1,0 +1,60 @@
+<%- include("header-dashboard"); -%>
+<div class="container-fluid px-5 ">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-sm-12">
+            <div class="card m-5 p-2">
+                <div class="card-body">
+                  <h5 class="card-title" style="text-align: center;" ><i style="font-size: 18px;" class="fas fa fa-address-card"></i> User Profiles</h5>
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+
+                  <div style="position: relative;" id="userList">
+                    <i style="position: absolute; margin-left: 94%; margin-top: 2px;" class="fas fa fa-search p-2"></i>
+                    <input  type="search" class="form-control fuzzy-search" id="myInput" onkeyup="myFunction()" placeholder="Search for users...">
+                  <ul class="list-group list-group-flush list">
+                    <% users.forEach(element => {%> 
+                      <br>
+                      <div data-id="<%= element.id %>" >
+
+                      <li class="list-unstyled"><h5 class="text-center email"><%= element.email %> </h5></li> 
+
+                        <% if (!element.approved){%> 
+                          <li class="list-group-item pb-2">Approved: <button class="btn btn-success approve-user" data-email="<%=element.email%>" data-userId="<%=element.id%>" >accept</button> 
+                           <button type="button" data-email="<%=element.email%>" data-userId="<%=element.id%>" class="btn btn-danger delete-user" >reject</button></li>
+                        <%} else if(element.id!==1){%> 
+                          <li class="list-group-item pb-3">
+                            Approved: <i class=" text-success fas fa fa-check"></i>
+                                <button type="button" data-email="<%=element.email%>" data-userId="<%=element.id%>" class="btn btn-outline-danger btn-sm delete-user text-end float-end" >delete user</button>                         </li>
+                        <%}%> 
+
+
+                        <% if (element.role!=='admin'){%> 
+                          <li class="list-group-item pb-3 ">Role: <b><%= element.role %> </b><button class="btn btn-dark btn-sm setAdmin float-end" data-email="<%=element.email%>" data-userId="<%=element.id%>" >set to admin</button>  </li>
+                        <%} else if(element.id!==1){%> 
+                          <li class="list-group-item pb-3">Role: <b><%= element.role %> </b><button class="btn btn-info btn-sm setviewer float-end" data-email="<%=element.email%>" data-userId="<%=element.id%>" >set to viewer</button>  </li>
+                        <%} else{%> 
+                          <li class="list-group-item ">Role: <b><%= element.role %></b></p>
+                        <%}%> 
+
+                  </div>
+
+                    <%})%> 
+                  </ul>
+                </div>
+
+                  <script>
+                    var monkeyList = new List('userList', { 
+                            valueNames: ['email',
+                            { data: ['id'] }
+                          ]
+                          });
+                  </script>
+                </div>
+              </div>
+        </div>
+    </div>
+
+</div>
+<script src="/javascripts/adminAPI.js"></script>
+<%- include("footer3"); -%>

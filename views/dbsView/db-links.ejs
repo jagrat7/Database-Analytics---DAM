@@ -1,0 +1,44 @@
+<%- include("header"); -%>
+
+<div class="container-fluid px-5 ">
+        <div class="row justify-content-center">
+                <div class="col-md-7 col-sm-12">
+                        <table class="table table-hover table-striped table-sm">
+                                <thead>
+                                        <tr>
+                                                <th scope="col">Link Name</th>
+                                                <th scope="col">Status</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <% links.forEach((element) => { %>
+                                        <tr>
+                                                <td><%=element.db_link_name%> </td>
+                                                <% if(element.db_link_status==="online"){ %> 
+                                                        <td style="color:rgb(67, 185, 92)"><i class="fas fa fa-circle" style="font-size: 12px;"></i> <%=element.db_link_status%></td>
+                                                <% }else{ %> 
+                                                        <td style="color:rgb(255, 40, 40)"><i class="fas fa fa-circle"style="font-size: 12px;"></i> <%=element.db_link_status%></td>
+                                                <% } %> 
+                                                
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+
+</div>
+
+</main>
+</div>
+</div>
+
+
+
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+
+</html>

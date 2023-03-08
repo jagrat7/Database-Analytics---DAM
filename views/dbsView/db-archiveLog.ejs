@@ -1,0 +1,84 @@
+<%- include("header"); -%>
+
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
+</script>
+
+<% if(historical== undefined){ %> 
+  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+  <script>
+
+        const data = {
+            labels: ['archiveLog used(%)'],
+            datasets: [
+                {
+                    data: [<%=percentUsed%>],
+                    label: 'archiveLog used(%)',
+                    backgroundColor: '#2dd7e3',
+                },
+            ]
+        };
+    
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Db archiveLog used today'
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+            }
+        };
+
+        const myChart = new Chart(document.getElementById('myChart'), config);
+  </script>
+<% }else{ %> 
+  <% if(historical=="error") {%> 
+      <p class="alert alert-secondary">Data for this timeframe is not available yet, please check the logs for more information.</p>
+    <% } else { %> 
+      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+      <script>
+
+        let labels = <%-JSON.stringify(historicalLabel)%>  ;
+        const data = {
+          labels: <%-JSON.stringify(historicalLabel)%> ,
+          datasets: [
+            {
+              label: 'Archive Log Space Percent Used',
+              data: <%-JSON.stringify(historicalPercentUsed)%>,
+              borderColor: '#2dd7e3',
+              // backgroundColor: '',
+            }
+          ]
+        };
+
+        const config = {
+          type: 'line',
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+            }
+          },
+        };
+
+        const myChartWeek = new Chart("myChart", config );
+      </script>
+      <p class="text-muted">Note : If values for a given date are not found the chart might append the oldest available values to the start dates. Please view the logs for more details.</p>
+    <% } %> 
+<% } %> 
+ 
+<%- include("footer"); -%>

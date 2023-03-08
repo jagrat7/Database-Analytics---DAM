@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DAM App</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/dashboard.css" rel="stylesheet">
+  <!-- <link href="/stylesheets/styles.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+
+</head>
+
+<body>
+  <main class=" ">
+    <header class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark  p-0 shadow">
+      <div class="container-fluid ps-0 px-3">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 " style="background-color:#212529; box-shadow:none; "
+          href="/">DAM</a>
+        <button class="navbar-toggler mt-1 mb-1 me-3" type="button" data-bs-toggle="collapse"
+          data-bs-target=".navbars">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end navbars">
+          <ul class="navbar-nav ">
+            <li class="nav-item  ">
+              <a class="nav-link active " title="add a database" href="/dashboard/addDB">+ <i class="fal fa fa-database"></i></a>
+            </li>
+            <li class="nav-item  ">
+              <a class="nav-link active" title="home" href="/dashboard">  <i class="far fa fa-home"></i> </a>
+            </li>
+            <li class="nav-item dropdown "> 
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" >
+               <i class="fad fa fa-user-circle"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" >
+                <li><a class="dropdown-item " href="/dashboard/profile"><i class="fal fa fa-user"></i> Profile</a></li>
+                <li><a class="dropdown-item " href="/dashboard/adminPanel"><i style="font-size:11px" class="fas fa fa-user-cog"></i> Admin</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item " href="/logout"><i class="fal fa fa-sign-out-alt"></i> Sign Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

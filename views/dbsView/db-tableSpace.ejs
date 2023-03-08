@@ -1,0 +1,171 @@
+<%- include("header"); -%>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
+</script>
+
+<% if(historical== undefined){ %> 
+    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+    <script>
+        'use strict'
+        feather.replace({
+            'aria-hidden': 'true'
+        })
+        let labels
+        if(Array.isArray(<%-JSON.stringify(tableNames)%>)){    
+             labels = <%-JSON.stringify(tableNames)%>;
+        }
+        else{
+             labels = ['<%-tableNames%>'];
+        }
+    //*CONFIG FREE SPACE FROM SQL QUERY
+        const data = {
+            labels: labels,
+            datasets: [
+                // {
+                //     data: <%=JSON.stringify( used)%>,
+                //     label: 'used(GB)',
+                //     backgroundColor: '#007bff',
+                //     stack: 'Stack 0',
+                //     borderSkipped: 'middle',
+                // },
+                // {
+                //     data: <%=JSON.stringify(size)%>,
+                //     label: 'total size(GB)',
+                //     backgroundColor: '#007b4f',
+                //     stack: 'Stack 0',
+                //     borderSkipped: 'middle',
+                // },
+                {
+                    data: [<%=pct%>],
+                    label: 'pct(%)',
+                    backgroundColor: '#fff152',
+                },
+    
+            ]
+        };
+    
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Db tablespace today'
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    },
+                }
+            }
+        };
+
+        const myChart = new Chart(document.getElementById('myChart'), config);
+    </script>
+    <% }else{ %> 
+    
+        <% if(historical=="error") {%> 
+    
+          <p class="alert alert-secondary">Data for this timeframe is not available yet, please check the logs for more information.</p>
+    
+        <% } else { %> 
+            <% if( tableName!== 'allData') {%> 
+                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <script>
+                    const data = {
+                        labels: <%-JSON.stringify(historicalLabel)%> ,
+                        datasets: [
+                        {
+                            label: '<%=tableName %>'+' PCT',
+                            data: <%-JSON.stringify(historicalPct)%>,
+                            borderColor: 'red',
+                            // backgroundColor: '#fff152',
+                        },
+                        ]
+                    };
+    
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                            position: 'top',
+                            },
+                        }
+                        },
+                    };
+    
+                    const myChart2 = new Chart("myChart", config );
+                </script>
+            <% }else{ %>  
+            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+            <script>
+                const data = {
+                    labels: <%-JSON.stringify(historicalLabel)%> ,
+                    datasets: [
+                    {
+                        label: '<%=historicalTableNameLabel[0] %>'+' PCT',
+                        data: <%-JSON.stringify(historicalPctT1)%>,
+                        borderColor: 'red',
+                        // backgroundColor: '#fff152',
+                    },
+                    {
+                        label: '<%=historicalTableNameLabel[1] %>'+' PCT',
+                        data: <%-JSON.stringify(historicalPctT2)%>,
+                        borderColor: 'green',
+                        // backgroundColor: '#fff152',
+                    },                    {
+                        label: '<%=historicalTableNameLabel[2] %>'+' PCT',
+                        data: <%-JSON.stringify(historicalPctT3)%>,
+                        borderColor: 'purple',
+                        // backgroundColor: '#fff152',
+                    },                    {
+                        label: '<%=historicalTableNameLabel[3] %>'+' PCT',
+                        data: <%-JSON.stringify(historicalPctT4)%>,
+                        borderColor: 'yellow',
+                        // backgroundColor: '#fff152',
+                    },                    {
+                        label: '<%=historicalTableNameLabel[4] %>'+' PCT',
+                        data: <%-JSON.stringify(historicalPctT5)%>,
+                        borderColor: 'blue',
+                        // backgroundColor: '#fff152',
+                    }
+                    ]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                        position: 'top',
+                        },
+                    }
+                    },
+                };
+
+                const myChartWeek = new Chart("myChart", config );
+            </script>
+        <% } %> 
+    <% } %> 
+<% } %>
+
+
+
+<%- include("footer") -%>

@@ -1,0 +1,99 @@
+<!-- https://stackoverflow.com/questions/21609012/disable-readonly-to-text-box-onclicking-the-button -->
+<%- include("header-dashboard"); -%>
+<div class="container-fluid px-5 py-5 m-auto" style="height: 80%; width: 55%;">
+
+  <div class="card">
+    <div class="card-body p-4">
+      <h2>Edit your oracle database information</h2>
+      <form action="/dashboard/'+<%=dbList.id%>+'/edit" id="editForm" method="POST" >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">DB name (Nickname)</label>
+          <input type="text" class="form-control" name="dbName" value="<%=dbList.db_nickname%>">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">DB SID/Service Name</label>
+          <input type="text" class="form-control" name="dbSid"  value="<%=dbList.db_sid%>">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">DB Host/IP address</label>
+          <input type="text" class="form-control" name="dbIP"  value="<%=dbList.db_host%>">
+          <div id="emailHelp" class="form-text">You have to be on the same network for a valid IP.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">DB Port</label>
+          <input type="text" class="form-control" name="dbPort"  value="<%=dbList.db_port%>">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">DB username</label>
+          <input type="text" class="form-control" name="dbUser"  value="<%=dbList.db_username%>">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">DB Password</label>
+          <input type="password" class="form-control" name="dbPassword"  value="<%=dbList.db_password%>">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="sysCheck">
+          <label class="form-check-label" for="sysCheck"  value="<%=dbList.db_asm%>">Check if database use asm.</label>
+        </div>
+        <button type="submit" id="Submit23" class="btn btn-dark">Update</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  myFormEdit = document.getElementById("editForm")
+
+  myFormEdit.addEventListener("submit", function (e) {
+    e.preventDefault()
+    Swal.fire({
+      title: 'Are you want edit this database?',
+      text: "Make sure the db information is correct.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#65d672',
+      // cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'Trying to connect to updated database...',
+          showConfirmButton: false,
+        });
+      const prePayload = new FormData(this); //this = form data myFormEdit
+      const payload = new URLSearchParams(prePayload);
+      fetch('/dashboard/'+<%=dbList.id%>+'/edit', {
+        method: 'POST',
+        body: payload,
+      })
+        .then(res => res.json())
+        .then((data) => {
+          if (data.connection) {
+            Swal.fire({
+              allowOutsideClick: false,
+              icon: 'success',
+              text: 'Connection successful. Updated!',
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              window.location.href = "/dashboard";
+            })
+            }else{
+            Swal.fire({
+              allowOutsideClick: true,
+              icon: 'error',
+              text: 'Connection to database failed. Please ensure you are on the right network and your information is correct.',
+              showConfirmButton: false,
+              showCloseButton: true
+            });
+          }
+        }).catch(error => console.error(error));
+
+      }
+    }).catch(error => console.error(error));
+  })
+</script>
+
+<%- include("footer3"); -%>
